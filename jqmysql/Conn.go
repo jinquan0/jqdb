@@ -29,7 +29,7 @@ func MyEndpointConstruct(conn *ST_MySQL_Endpoint) {
     }else{
         conn.MyEndpoint = strings.Join([]string{conn.User, ":", conn.Pass, "@tcp(", conn.Host, ":", conn.Port, ")/", conn.Db, "?charset=utf8"}, "")
     }
-    fmt.Println(conn.MyEndpoint)
+    //fmt.Println(conn.MyEndpoint)
 }
 
 func MyConn(conn *ST_MySQL_Endpoint) *sql.DB {
