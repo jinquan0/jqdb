@@ -67,6 +67,31 @@ func HashGetFields(r *redis.Client, key string, fields []string ) map[string]int
     return resMap
 }
 
+// 通过key 获取hash所有元素值
+// 测试Hash 写入
+// HMSET hk1 topic "aws-aurora-memory" key "nxprbdyxy-reader1" value "32"
+func HashGetFields2(r *redis.Client, key string, fields []string ) map[string]interface{} {
+    resMap := make(map[string]interface{})
+    for _, field := range fields {
+        var result interface{}
+        val, err := r.HGet(key, fmt.Sprintf("%s", field)).Result()
+        if err == redis.Nil {
+            fmt.Printf("Key Doesn't Exists: %v\n", field)
+            resMap[field] = result
+	    return nil
+        }else if err != nil {
+            fmt.Printf("Redis HMGet Error: %v\n", err)
+            resMap[field] = result
+        }
+        if val != "" {
+            resMap[field] = val
+        }else {
+            resMap[field] = result
+        }
+    }
+    return resMap
+}
+
 func HashesGet(endpoint ST_Redis_Endpoint, keys []string, fields []string ) []map[string]interface{} {
     hashes := make([]map[string]interface{}, 1)
     hashes_cnt := len(keys)
