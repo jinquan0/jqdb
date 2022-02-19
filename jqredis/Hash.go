@@ -70,7 +70,11 @@ func HashGetFields(r *redis.Client, key string, fields []string ) map[string]int
 // 通过key 获取hash所有元素值
 // 测试Hash 写入
 // HMSET hk1 topic "aws-aurora-memory" key "nxprbdyxy-reader1" value "32"
-func HashGetFields2(r *redis.Client, key string, fields []string ) map[string]interface{} {
+func HashGetFields_v2(endpoint ST_Redis_Endpoint, key string, fields []string ) map[string]interface{} {
+    r := RedisConn(endpoint)
+    if r == nil {
+	return nil
+    }
     resMap := make(map[string]interface{})
     for _, field := range fields {
         var result interface{}
@@ -89,6 +93,7 @@ func HashGetFields2(r *redis.Client, key string, fields []string ) map[string]in
             resMap[field] = result
         }
     }
+    RedisDisConn(r)
     return resMap
 }
 
