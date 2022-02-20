@@ -6,6 +6,7 @@ package jqredis
 import (
     "fmt"
     "reflect"
+    "time"
     "github.com/go-redis/redis"
 )
 
@@ -33,11 +34,30 @@ func StructToMap(in interface{}, tagName string) (map[string]interface{}, error)
     return out, nil
 }
 
+func HashKeyExsit(endpoint ST_Redis_Endpoint, key string)  {
+	r := RedisConn(endpoint)
+	exsit := r.Exists(key)
+	fmt.Println(exsit)
+}
+
 func HashSet(endpoint ST_Redis_Endpoint, key string, fields map[string]interface{}) string {
     r := RedisConn(endpoint)
     val, err := r.HMSet(key, fields).Result()
     if err != nil {
         fmt.Println("Redis HMSet Error:", err)
+    }
+    RedisDisConn(r)
+    return val
+}
+
+func HashSet_v2(endpoint ST_Redis_Endpoint, key string, fields map[string]interface{}, ttl time.Duration) string {
+    r := RedisConn(endpoint)
+    val, err := r.HMSet(key, fields).Result()
+    if err != nil {
+        fmt.Println("Redis HMSet Error:", err)
+    }else{
+	ttlcmd := r.Expire(key, ttl)
+	fmt.Println(ttlcmd.Result())
     }
     RedisDisConn(r)
     return val
