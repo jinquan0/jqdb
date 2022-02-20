@@ -37,6 +37,7 @@ func StructToMap(in interface{}, tagName string) (map[string]interface{}, error)
 func HashKeyExsit(endpoint ST_Redis_Endpoint, key string)  {
 	r := RedisConn(endpoint)
 	exsit := r.Exists(key)
+	RedisDisConn(r)
 	fmt.Println(exsit)
 }
 
