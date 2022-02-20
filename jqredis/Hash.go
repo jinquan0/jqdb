@@ -58,7 +58,7 @@ func HashSet_v2(endpoint ST_Redis_Endpoint, key string, fields map[string]interf
         fmt.Println("Redis/> HMSet Error:", err)
     }else{
 	ttlcmd := r.Expire(key, ttl)
-	fmt.Println(ttlcmd.Result())
+	    fmt.Printf("Redis/> hash key[%s] set TTL %v , result:%v\n", key, ttl, ttlcmd.Result())
     }
     RedisDisConn(r)
     return val
