@@ -73,10 +73,10 @@ func HashGetFields(r *redis.Client, key string, fields []string ) map[string]int
         var result interface{}
         val, err := r.HGet(key, fmt.Sprintf("%s", field)).Result()
         if err == redis.Nil {
-            fmt.Printf("Redis/> Key Doesn't Exists: %v", field)
+            fmt.Printf("Redis/> Key Doesn't Exists: %v\n", field)
             resMap[field] = result
         }else if err != nil {
-            fmt.Printf("Redis/> HMGet Error: %v", err)
+            fmt.Printf("Redis/> HMGet Error: %v\n", err)
             resMap[field] = result
         }
         if val != "" {
