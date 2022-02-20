@@ -19,7 +19,7 @@ func StructToMap(in interface{}, tagName string) (map[string]interface{}, error)
     }
 
     if v.Kind() != reflect.Struct {  // 非结构体返回错误提示
-        return nil, fmt.Errorf("ToMap only accepts struct or struct pointer; got %T", v)
+        return nil, fmt.Errorf("Redis/> ToMap only accepts struct or struct pointer; got %T", v)
     }
 
     t := v.Type()
@@ -38,14 +38,14 @@ func HashKeyExsit(endpoint ST_Redis_Endpoint, key string)  {
 	r := RedisConn(endpoint)
 	exsit := r.Exists(key)
 	RedisDisConn(r)
-	fmt.Println("Hash key[%s] ",key,exsit)
+	fmt.Println("Redis/> Hash key[%s] ",key,exsit)
 }
 
 func HashSet(endpoint ST_Redis_Endpoint, key string, fields map[string]interface{}) string {
     r := RedisConn(endpoint)
     val, err := r.HMSet(key, fields).Result()
     if err != nil {
-        fmt.Println("Redis HMSet Error:", err)
+        fmt.Println("Redis/> HMSet Error:", err)
     }
     RedisDisConn(r)
     return val
@@ -55,7 +55,7 @@ func HashSet_v2(endpoint ST_Redis_Endpoint, key string, fields map[string]interf
     r := RedisConn(endpoint)
     val, err := r.HMSet(key, fields).Result()
     if err != nil {
-        fmt.Println("Redis HMSet Error:", err)
+        fmt.Println("Redis/> HMSet Error:", err)
     }else{
 	ttlcmd := r.Expire(key, ttl)
 	fmt.Println(ttlcmd.Result())
@@ -73,10 +73,10 @@ func HashGetFields(r *redis.Client, key string, fields []string ) map[string]int
         var result interface{}
         val, err := r.HGet(key, fmt.Sprintf("%s", field)).Result()
         if err == redis.Nil {
-            fmt.Printf("Key Doesn't Exists: %v", field)
+            fmt.Printf("Redis/> Key Doesn't Exists: %v", field)
             resMap[field] = result
         }else if err != nil {
-            fmt.Printf("Redis HMGet Error: %v", err)
+            fmt.Printf("Redis/> HMGet Error: %v", err)
             resMap[field] = result
         }
         if val != "" {
@@ -101,11 +101,11 @@ func HashGetFields_v2(endpoint ST_Redis_Endpoint, key string, fields []string ) 
         var result interface{}
         val, err := r.HGet(key, fmt.Sprintf("%s", field)).Result()
         if err == redis.Nil {
-            fmt.Printf("Key Doesn't Exists: %v\n", field)
+            fmt.Printf("Redis/> Key Doesn't Exists: %v\n", field)
             resMap[field] = result
 	    return nil
         }else if err != nil {
-            fmt.Printf("Redis HMGet Error: %v\n", err)
+            fmt.Printf("Redis/> HMGet Error: %v\n", err)
             resMap[field] = result
         }
         if val != "" {
