@@ -39,7 +39,7 @@ func HashKeyExsit(endpoint ST_Redis_Endpoint, key string)  {
 	exsit := r.Exists(key)
 	RedisDisConn(r)
 	i,_:=exsit.Result()
-	fmt.Printf("Redis/> Hash key [%s], exsit:%d\n", key, i )
+	fmt.Printf("Redis/> Hash key search[%s], exsit:%d\n", key, i )
 }
 
 func HashSet(endpoint ST_Redis_Endpoint, key string, fields map[string]interface{}) string {
@@ -59,7 +59,7 @@ func HashSet_v2(endpoint ST_Redis_Endpoint, key string, fields map[string]interf
         fmt.Println("Redis/> HMSet Error:", err)
     }else{
 	ttlcmd := r.Expire(key, ttl)
-	    fmt.Printf("Redis/> Hash key[%s] set TTL %v\t", key, ttl )
+	    fmt.Printf("Redis/> Hash key[%s] set TTL %v, \t", key, ttl )
 	    fmt.Println(ttlcmd)
     }
     RedisDisConn(r)
@@ -103,7 +103,7 @@ func HashGetFields_v2(endpoint ST_Redis_Endpoint, key string, fields []string ) 
         var result interface{}
         val, err := r.HGet(key, fmt.Sprintf("%s", field)).Result()
         if err == redis.Nil {
-            fmt.Printf("Redis/> Key Doesn't Exists: %v\n", field)
+            fmt.Printf("Redis/> Hash doesn't contain field: %v\n", field)
             resMap[field] = result
 	    return nil
         }else if err != nil {
