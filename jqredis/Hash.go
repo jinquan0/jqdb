@@ -38,7 +38,7 @@ func HashKeyExsit(endpoint ST_Redis_Endpoint, key string)  {
 	r := RedisConn(endpoint)
 	exsit := r.Exists(key)
 	RedisDisConn(r)
-	fmt.Println(exsit)
+	fmt.Println("Hash key[%s] ",key,exsit)
 }
 
 func HashSet(endpoint ST_Redis_Endpoint, key string, fields map[string]interface{}) string {
