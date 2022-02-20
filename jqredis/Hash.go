@@ -38,7 +38,7 @@ func HashKeyExsit(endpoint ST_Redis_Endpoint, key string)  {
 	r := RedisConn(endpoint)
 	exsit := r.Exists(key)
 	RedisDisConn(r)
-	fmt.Println("Redis/> Hash key[%s] ",key,exsit)
+	fmt.Printf("Redis/> Hash key [%v]\n", exsit.Result() )
 }
 
 func HashSet(endpoint ST_Redis_Endpoint, key string, fields map[string]interface{}) string {
@@ -58,7 +58,7 @@ func HashSet_v2(endpoint ST_Redis_Endpoint, key string, fields map[string]interf
         fmt.Println("Redis/> HMSet Error:", err)
     }else{
 	ttlcmd := r.Expire(key, ttl)
-	    fmt.Printf("Redis/> hash key[%s] set TTL %v , result:%v\n", key, ttl, ttlcmd.Result())
+	    fmt.Printf("Redis/> Hash key[%s] set TTL %v , result:%v\n", key, ttl, ttlcmd.Result())
     }
     RedisDisConn(r)
     return val
