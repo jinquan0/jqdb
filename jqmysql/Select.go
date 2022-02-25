@@ -6,9 +6,9 @@ import (
     "fmt"
 )
 
-func MySelect(MyDb *sql.DB, sql string, args... interface{}) bool {
+func MySelect(MyDb *sql.DB, query string, args... interface{}) bool {
 
-    row:=MyDb.QueryRow(sql)
+    row:=MyDb.QueryRow(query)
 
     err:=row.Scan(args...)
     if err != nil {
