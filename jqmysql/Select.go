@@ -2,6 +2,7 @@ package jqmysql
 
 import (
     "database/sql"
+    "github.com/go-sql-driver/mysql"
     "fmt"
 )
 
