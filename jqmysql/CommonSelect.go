@@ -162,14 +162,15 @@ func MyCommonSelectV2(myQuery ST_MyCommonQuery, MyDb *sql.DB) (error, []map[stri
     
     err1,numrow := Resultset2Anyarray(rows, myQuery.AnyArray)
     rows.Close()
+    
+    maps := make([]map[string]interface{}, 0)
     if err1 != nil {
         fmt.Println("MySQL/> DescAutoMatch error: %v", err1 )
         return err1,nil,0
     }else{
-        maps := make([]map[string]interface{}, 0)
         for i:=0; i < numrow; i ++ {
             m := make(map[string]interface{})
-            elem := reflect.ValueOf(BUFFER[i]).Elem()
+            elem := reflect.ValueOf(myQuery.AnyArray[i]).Elem()
             relType := elem.Type()
             for j:=0; j < relType.NumField(); j++ {
                 m[relType.Field(j).Name] = elem.Field(j).Interface()
