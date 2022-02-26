@@ -156,7 +156,8 @@ func MyCommonSelect(myQuery ST_MyCommonQuery, MyDb *sql.DB) (error,int) {
 func MyCommonSelect2Maps(myQuery ST_MyCommonQuery, MyDb *sql.DB) (error, []map[string]interface{}, int) {  
     rows,err := MyDb.Query( myQuery.Sql )
     if err != nil {
-        return err,0
+        fmt.Println("MySQL/> Query error: %v", err1 )
+        return err,nil,0
     }else{
     }
     
