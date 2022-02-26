@@ -152,3 +152,34 @@ func MyCommonSelect(myQuery ST_MyCommonQuery, MyDb *sql.DB) (error,int) {
     
     return nil,numrow
 }
+
+func MyCommonSelectV2(myQuery ST_MyCommonQuery, MyDb *sql.DB) (error, []map[string]interface{}, int) {  
+    rows,err := MyDb.Query( myQuery.Sql )
+    if err != nil {
+        return err,0
+    }else{
+    }
+    
+    err1,numrow := Resultset2Anyarray(rows, myQuery.AnyArray)
+    rows.Close()
+    if err1 != nil {
+        fmt.Println("MySQL/> DescAutoMatch error: %v", err1 )
+        return err1,nil,0
+    }else{
+        maps := make([]map[string]interface{}, 0)
+        for i:=0; i < numrow; i ++ {
+            m := make(map[string]interface{})
+            elem := reflect.ValueOf(BUFFER[i]).Elem()
+            relType := elem.Type()
+            for j:=0; j < relType.NumField(); j++ {
+                m[relType.Field(j).Name] = elem.Field(j).Interface()
+            }
+            maps = append(maps, m)
+        }
+        //fmt.Println(maps)
+    }
+    
+    ParaLock_my_read_total.Lock(); MyReadTotal++; ParaLock_my_read_total.Unlock()
+    
+    return nil,maps,numrow
+}
