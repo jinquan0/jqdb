@@ -48,7 +48,7 @@ func main() {
 
 	db := jq.MyConn(e)
 	jq.MyInsert( db, 
-			"INSERT IGNORE INTO bledev(`id`, `product_key`, `verbose_name`) VALUES (?,?,?)",	*d ) 
+			"INSERT IGNORE INTO bledev(`id`, `product_key`, `verbose_name`) VALUES (?,?,?)",	*d, true) 
 	jq.MyDisconn(db)
 
 }
