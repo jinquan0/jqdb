@@ -43,7 +43,7 @@ func MyInsert(MyDb *sql.DB, sql string, mydata interface{}, info_flag bool) bool
     //获得上一个插入自增的id
     i,_:=res.LastInsertId()
     if info_flag == true {
-        log.Printf("MySQL/> Id[%d] insert.\n", i)
+        log.Printf("MySQL/> LastInsertId[%d]: %v \n", i, mydata )
     }
     
     ParaLock_my_write_total.Lock(); MyWriteTotal++; ParaLock_my_write_total.Unlock()
