@@ -134,25 +134,17 @@ type ST_MyCommonQuery struct{
 }
 
 func MyDummySelect(sql string, MyDb *sql.DB) (error,int) {  
-    rows,err := MyDb.Query( myQuery.Sql )
+    rows,err := MyDb.Query( sql )
     if err != nil {
         return err,0
     }else{
     }
-    
     var numrow int = 0 
     for rows.Next() {
         numrow++
     }
     rows.Close()
-    if err1 != nil {
-        fmt.Println("MySQL/> DescAutoMatch error: %v", err1 )
-        return err1,0
-    }else{ 
-    }
-
     ParaLock_my_read_total.Lock(); MyReadTotal++; ParaLock_my_read_total.Unlock()
-    
     return nil,numrow
 }
 
