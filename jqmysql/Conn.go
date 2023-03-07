@@ -40,11 +40,11 @@ func MyConn(conn *ST_MySQL_Endpoint) *sql.DB {
     // 构建MySQL连接串
     MyEndpointConstruct(conn)
 
-    if conn.Sslca != "null" {
+    if conn.Sslca != "none" {
         rootCertPool := x509.NewCertPool()
         pem, _ := ioutil.ReadFile(conn.Sslca)
         if ok := rootCertPool.AppendCertsFromPEM(pem); !ok {
-            log.Fatal("Failed to append PEM.")
+            log.Fatal("fatal error, [jqmysql.MyConn] failed to append PEM.")
         }
         mysql.RegisterTLSConfig("custom", &tls.Config{RootCAs: rootCertPool})
     }else{
