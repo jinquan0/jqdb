@@ -24,7 +24,7 @@ type ST_MySQL_Endpoint struct {
 }
 
 func MyEndpointConstruct(conn *ST_MySQL_Endpoint) {
-    if conn.Sslca != "null" {
+    if conn.Sslca != "none" {
         conn.MyEndpoint = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?allowNativePasswords=true&tls=custom&charset=utf8", conn.User , conn.Pass, conn.Host, conn.Port, conn.Db)
     }else{
         conn.MyEndpoint = strings.Join([]string{conn.User, ":", conn.Pass, "@tcp(", conn.Host, ":", conn.Port, ")/", conn.Db, "?charset=utf8"}, "")
