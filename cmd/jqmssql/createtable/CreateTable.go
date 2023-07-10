@@ -31,7 +31,7 @@ var (
     port     *int = flag.Int("port", 1433, "SQL Server connect port")
     //user          = flag.String("user", "testuser0", "connect user")
     //password      = flag.String("password", "FDNvQ8#g", "connect password")
-    user          = flag.String("user", 'cn\infra01testuser', "connect user")
+    user          = flag.String("user", "cn\\infra01testuser", "connect user")
     database      = flag.String("database", "jq01test", "database name")
 )
 
@@ -40,7 +40,8 @@ func init() {
 }
 
 func CreateTable() {
-    conn := jq.MssqlConn(*server, *port, *user, *password, *database)
+    //conn := jq.MssqlConn(*server, *port, *user, *password, *database)
+    conn := jq.MssqlConnWithMSA(*server, *port, *user, *database)
 
 	_, err := conn.Exec("create table test (f int)")
 	defer conn.Exec("drop table test")
@@ -56,7 +57,8 @@ func Transaction() {
 	//defer conn.Close()
 	//defer logger.StopLogging()
 
-    conn := jq.MssqlConn(*server, *port, *user, *password, *database)
+    //conn := jq.MssqlConn(*server, *port, *user, *password, *database)
+    conn := jq.MssqlConnWithMSA(*server, *port, *user, *database)
 
 	//_, err := conn.Exec("create table test (f int)")
 	//defer conn.Exec("drop table test")
