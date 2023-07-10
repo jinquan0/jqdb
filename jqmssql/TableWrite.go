@@ -8,7 +8,6 @@ import (
     "crypto/rand"  //生成真随机数
     "github.com/satori/go.uuid" //生成UID
     _ "github.com/denisenkom/go-mssqldb"
-    jq "github.com/jinquan0/jqdb/jqmssql"
 )
 
 // sql example:
