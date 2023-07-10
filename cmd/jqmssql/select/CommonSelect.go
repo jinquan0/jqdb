@@ -4,14 +4,15 @@ import (
     "flag"
     "fmt"
     _ "github.com/denisenkom/go-mssqldb"
-    jq "github.com/jinquan0/jqdb/jqmssql"
+    //jq "github.com/jinquan0/jqdb/jqmssql"
+    jq "gitee.com/jinquan711/jdb/jqmssql"
 )
 
 var (
     debug         = flag.Bool("debug", false, "enable debugging")
     password      = flag.String("password", "ev83zmuY", "the database password")
     port     *int = flag.Int("port", 1433, "the database port")
-    server        = flag.String("server", "172.24.18.253", "the database server")
+    server        = flag.String("server", "172.24.22.4", "the database server")
     user          = flag.String("user", "mon", "the database user")
 )
 
