@@ -4,7 +4,6 @@ import (
 	"context"
 	"log"
 	"reflect"
-    "flag"
     "crypto/rand"  //生成真随机数
     "github.com/satori/go.uuid" //生成UID
     _ "github.com/denisenkom/go-mssqldb"
@@ -17,14 +16,14 @@ import (
  	)
  */
 func CreateTable(conn DBconn, tabname string, sql string) {
-    db := jq.MssqlConn(conn)
-    //conn := jq.MssqlConnWithMSA(*server, *port, *user, *database)
+    db := MssqlConn(conn)
+    //conn := MssqlConnWithMSA(*server, *port, *user, *database)
 	_, err := db.Exec(sql)
 	defer db.Exec("drop table " + tabname)
 	if err != nil {
 		log.Fatal("SQL Server/> create table failed with error", err)
 	}
-	jq.MssqlDisconn(db)
+	MssqlDisconn(db)
 }
 
 func random_data() (int64, string) {
@@ -36,7 +35,7 @@ func random_data() (int64, string) {
 // sql example:
 // insert into tb1 (fld1, fld2) values (123, 'abcdefg')
 func BulkInsertTable(conn DBconn, tabname string, count int) {
-	db := jq.MssqlConn(conn)
+	db := MssqlConn(conn)
 	for i := 0; i < count; i++ {
 		tx, err := db.Begin()
 		if err != nil {
@@ -50,7 +49,7 @@ func BulkInsertTable(conn DBconn, tabname string, count int) {
 			log.Fatal("SQL Server/> Insert failed", err)
 		}
 	}
-	jq.MssqlDisconn(db)
+	MssqlDisconn(db)
 }
 
 // sql example:
@@ -58,8 +57,8 @@ func BulkInsertTable(conn DBconn, tabname string, count int) {
 // sql_tx2: "insert into tb1 (fld1, fld2) values (2,'bbb')", 
 // sql_post_tx: "select fld1,fld2 from tb1"
 func Transaction(conn DBconn, sql_tx1 string, sql_tx2 string, sql_post_tx string) {
-    //db := jq.MssqlConn(*server, *port, *user, *password, *database)
-    db := jq.MssqlConn(conn)
+    //db := MssqlConn(*server, *port, *user, *password, *database)
+    db := MssqlConn(conn)
 
 	tx1, err := db.BeginTx(context.Background(), nil)
 	if err != nil {
@@ -100,7 +99,7 @@ func Transaction(conn DBconn, sql_tx1 string, sql_tx2 string, sql_post_tx string
 		}
 	}
 
-	jq.MssqlDisconn(db)
+	MssqlDisconn(db)
 }
 
 
