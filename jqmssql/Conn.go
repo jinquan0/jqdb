@@ -10,7 +10,7 @@ import (
 // https://github.com/denisenkom/go-mssqldb/blob/master/examples/tsql/tsql.go
 func MssqlConn(server string, port int,
                 user string, pass string,  database string ) (*sql.DB) {
-    dsn := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d;database=", server, user, pass, port, database)
+    dsn := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d;database=%s", server, user, pass, port, database)
     log.Printf(" dsn:%s\n", dsn)
     // database driver: Microsoft SQL Server
     db, err := sql.Open("mssql", dsn)
