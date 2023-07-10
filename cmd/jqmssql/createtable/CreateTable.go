@@ -1,25 +1,10 @@
 package main
 
 import (
-	//"bytes"
 	"context"
-	//"database/sql"
-	//"database/sql/driver"
-	//"fmt"
-	//"io"
 	"log"
-	//"math"
-	//"net"
 	"reflect"
-	//"strings"
-	//"sync"
-	//"testing"
-	//"time"
-
-	// "github.com/denisenkom/go-mssqldb/msdsn"
-
     "flag"
-    //"fmt"
     _ "github.com/denisenkom/go-mssqldb"
     jq "github.com/jinquan0/jqdb/jqmssql"
     //jq "gitee.com/jinquan711/jdb/jqmssql"
@@ -27,11 +12,11 @@ import (
 
 var (
     debug         = flag.Bool("debug", false, "enable debugging")
-    server        = flag.String("server", "172.24.22.1", "SQL Server Host IP")
+    server        = flag.String("server", "172.24.22.4", "SQL Server Host IP")
     port     *int = flag.Int("port", 1433, "SQL Server connect port")
-    //user          = flag.String("user", "testuser0", "connect user")
-    //password      = flag.String("password", "FDNvQ8#g", "connect password")
-    user          = flag.String("user", "cn\\infra01testuser", "connect user")
+    user          = flag.String("user", "testuser0", "connect user")
+    password      = flag.String("password", "FDNvQ8#g", "connect password")
+    //user          = flag.String("user", "cn\\infra01testuser", "connect user")
     database      = flag.String("database", "jq01test", "database name")
 )
 
@@ -40,9 +25,8 @@ func init() {
 }
 
 func CreateTable() {
-    //conn := jq.MssqlConn(*server, *port, *user, *password, *database)
-    conn := jq.MssqlConnWithMSA(*server, *port, *user, *database)
-
+    conn := jq.MssqlConn(*server, *port, *user, *password, *database)
+    //conn := jq.MssqlConnWithMSA(*server, *port, *user, *database)
 	_, err := conn.Exec("create table test (f int)")
 	defer conn.Exec("drop table test")
 	if err != nil {
@@ -53,19 +37,8 @@ func CreateTable() {
 
 
 func Transaction() {
-	//conn, logger := open(t)
-	//defer conn.Close()
-	//defer logger.StopLogging()
-
-    //conn := jq.MssqlConn(*server, *port, *user, *password, *database)
-    conn := jq.MssqlConnWithMSA(*server, *port, *user, *database)
-
-	//_, err := conn.Exec("create table test (f int)")
-	//defer conn.Exec("drop table test")
-	//if err != nil {
-	//	log.Fatal("create table failed with error", err)
-	//}
-
+    conn := jq.MssqlConn(*server, *port, *user, *password, *database)
+    //conn := jq.MssqlConnWithMSA(*server, *port, *user, *database)
 	tx1, err := conn.BeginTx(context.Background(), nil)
 	if err != nil {
 		log.Fatal("BeginTx failed with error", err)
