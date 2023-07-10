@@ -21,8 +21,8 @@ import (
     "flag"
     //"fmt"
     _ "github.com/denisenkom/go-mssqldb"
-    //jq "github.com/jinquan0/jqdb/jqmssql"
-    jq "gitee.com/jinquan711/jdb/jqmssql"
+    jq "github.com/jinquan0/jqdb/jqmssql"
+    //jq "gitee.com/jinquan711/jdb/jqmssql"
 )
 
 var (
