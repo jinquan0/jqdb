@@ -29,8 +29,9 @@ var (
     debug         = flag.Bool("debug", false, "enable debugging")
     server        = flag.String("server", "172.24.22.1", "SQL Server Host IP")
     port     *int = flag.Int("port", 1433, "SQL Server connect port")
-    user          = flag.String("user", "sa", "connect user")
-    password      = flag.String("password", "n9TLs7wp", "connect password")
+    //user          = flag.String("user", "testuser0", "connect user")
+    //password      = flag.String("password", "FDNvQ8#g", "connect password")
+    user          = flag.String("user", 'cn\infra01testuser', "connect user")
     database      = flag.String("database", "jq01test", "database name")
 )
 
@@ -57,11 +58,11 @@ func Transaction() {
 
     conn := jq.MssqlConn(*server, *port, *user, *password, *database)
 
-	_, err := conn.Exec("create table test (f int)")
-	defer conn.Exec("drop table test")
-	if err != nil {
-		log.Fatal("create table failed with error", err)
-	}
+	//_, err := conn.Exec("create table test (f int)")
+	//defer conn.Exec("drop table test")
+	//if err != nil {
+	//	log.Fatal("create table failed with error", err)
+	//}
 
 	tx1, err := conn.BeginTx(context.Background(), nil)
 	if err != nil {

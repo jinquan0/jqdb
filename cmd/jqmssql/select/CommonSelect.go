@@ -10,10 +10,11 @@ import (
 
 var (
     debug         = flag.Bool("debug", false, "enable debugging")
-    password      = flag.String("password", "ev83zmuY", "the database password")
-    port     *int = flag.Int("port", 1433, "the database port")
     server        = flag.String("server", "172.24.22.4", "the database server")
-    user          = flag.String("user", "mon", "the database user")
+    port     *int = flag.Int("port", 1433, "the database port")
+    user          = flag.String("user", "testuser0", "the database user")
+    password      = flag.String("password", "FDNvQ8#g", "the database password")
+    database      = flag.String("database", "jq01test", "database name")
 )
 
 type MsQueryReply struct{

@@ -27,6 +27,25 @@ func MssqlConn(server string, port int,
     return db
 }
 
+func MssqlConnWithMSA(server string, port int,
+                user string, database string ) (*sql.DB) {
+    dsn := fmt.Sprintf("server=%s;user id=%s;port=%d;database=%s", server, user, port, database)
+    log.Printf(" dsn:%s\n", dsn)
+    // database driver: Microsoft SQL Server
+    db, err := sql.Open("mssql", dsn)
+    if err != nil {
+        log.Fatal("SQL Server/> Cannot connect: ", err.Error())
+        return nil
+    }
+    //defer db.Close()
+    err = db.Ping()
+    if err != nil {
+        log.Fatal("SQL Server/> Cannot connect: ", err.Error())
+        return nil
+    }
+    return db
+}
+
 func MssqlDisconn(MsDb *sql.DB){
     MsDb.Close()
     log.Println("SQL Server/> database disconnected.")
