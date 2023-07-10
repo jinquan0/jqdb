@@ -21,16 +21,17 @@ import (
     "flag"
     //"fmt"
     _ "github.com/denisenkom/go-mssqldb"
-    jq "github.com/jinquan0/jqdb/jqmssql"
-
+    //jq "github.com/jinquan0/jqdb/jqmssql"
+    jq "gitee.com/jinquan711/jdb/jqmssql"
 )
 
 var (
     debug         = flag.Bool("debug", false, "enable debugging")
-    password      = flag.String("password", "n9TLs7wp", "the database password")
-    port     *int = flag.Int("port", 1433, "the database port")
-    server        = flag.String("server", "172.24.22.1", "the database server")
-    user          = flag.String("user", "sa", "the database user")
+    server        = flag.String("server", "172.24.22.1", "SQL Server Host IP")
+    port     *int = flag.Int("port", 1433, "SQL Server connect port")
+    user          = flag.String("user", "sa", "connect user")
+    password      = flag.String("password", "n9TLs7wp", "connect password")
+    database      = flag.String("database", "jq01test", "database name")
 )
 
 func init() {
@@ -38,7 +39,7 @@ func init() {
 }
 
 func CreateTable() {
-    conn := jq.MssqlConn(*server, *port, *user, *password)
+    conn := jq.MssqlConn(*server, *port, *user, *password, *database)
 
 	_, err := conn.Exec("create table test (f int)")
 	defer conn.Exec("drop table test")
@@ -54,7 +55,7 @@ func Transaction() {
 	//defer conn.Close()
 	//defer logger.StopLogging()
 
-    conn := jq.MssqlConn(*server, *port, *user, *password)
+    conn := jq.MssqlConn(*server, *port, *user, *password, *database)
 
 	_, err := conn.Exec("create table test (f int)")
 	defer conn.Exec("drop table test")
