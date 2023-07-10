@@ -1,9 +1,9 @@
 package main
 
 import (
-	"context"
-	"log"
-	"reflect"
+	//"context"
+	//"log"
+	//"reflect"
     "flag"
     _ "github.com/denisenkom/go-mssqldb"
     jq "github.com/jinquan0/jqdb/jqmssql"
@@ -19,7 +19,7 @@ var (
     database      = flag.String("database", "jq01test", "database name")
 )
 
-var DBC_PARA DBconn
+var DBC_PARA jq.DBconn
 
 func init() {
 	flag.Parse()
@@ -31,11 +31,11 @@ func init() {
 }
 
 func main() {
-	CreateTable(DBC_PARA, "table1", 
+	jq.CreateTable(DBC_PARA, "table1", 
 	`create table tb1 (id int identity(101,1) primary key not null, 
      fld1 int not null,
  	 fld2 nvarchar(50) not null
  	)`)
 
- 	BulkInsertTable(DBC_PARA, "table1", 1000)
+ 	jq.BulkInsertTable(DBC_PARA, "table1", 1000)
 }
