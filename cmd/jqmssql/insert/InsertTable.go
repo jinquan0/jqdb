@@ -34,6 +34,6 @@ func main() {
  	 fld2 nvarchar(50) not null
  	)`)
 
- 	jq.BulkInsertTable(DBC_PARA, "table1", 10)
+ 	jq.BulkInsertTable(DBC_PARA, "table1", 100)
 
 }

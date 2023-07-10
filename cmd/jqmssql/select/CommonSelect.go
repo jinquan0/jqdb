@@ -5,7 +5,6 @@ import (
     "fmt"
     _ "github.com/denisenkom/go-mssqldb"
     jq "github.com/jinquan0/jqdb/jqmssql"
-    //jq "gitee.com/jinquan711/jdb/jqmssql"
 )
 
 var (
@@ -18,13 +17,11 @@ var (
 )
 
 type MsQueryReply struct{
-    Id int64  `json:"Id"`
-    F1 string `json:"F1"`
-    F2 string  `json:"F2"`
-    F3 string  `json:"F3"`
-    F4 float64  `json:"F4"`
-    F5 float64  `json:"F5"`
+    Id int64  `json:"id"`
+    Fld1 int64 `json:"fld1"`
+    Fld2 string  `json:"fld2"`
 }
+
 func AnyarrayAlloc(sz int) []interface{} {
     any_array := make([]interface{}, sz, sz)
     for i:=0; i < sz; i++ {
@@ -33,18 +30,32 @@ func AnyarrayAlloc(sz int) []interface{} {
     return any_array
 }
 
-func main() {
-    flag.Parse()
-    db:=jq.MssqlConn(*server, *port, *user, *password)
 
+var DBC_PARA jq.DBconn
+
+func init() {
+    flag.Parse()
+    DBC_PARA.Server = *server
+    DBC_PARA.Port = *port 
+    DBC_PARA.User = *user 
+    DBC_PARA.Pass = *password
+    DBC_PARA.Database = *database
+}
+
+func main() {
+    //db:=jq.MssqlConn(*server, *port, *user, *password)
+    db := jq.MssqlConn(DBC_PARA)
+
+    //SELECT [Id],[F1],[F2],[F3],[F4],[F5] FROM [DB0].[dbo].[Table_1] WHERE Id=3 OR Id=5
     q:=&jq.ST_MsCommonQuery {
-        Sql: `SELECT [Id],[F1],[F2],[F3],[F4],[F5] FROM [DB0].[dbo].[Table_1] WHERE Id=3 OR Id=5`,
+        Sql: `select id,fld1,fld2 from table1 where id>=101 and id<=111`,
         AnyArray: AnyarrayAlloc(16),
     }
     _,MAPS,numrow:=jq.MsCommonSelect2Maps(*q, db)
     jq.MssqlDisconn(db)
 
-    fmt.Println(numrow)
-    fmt.Println(MAPS)
-
+    //fmt.Println(numrow)
+    for i:=0; i < numrow; i++ {
+        fmt.Println(MAPS[i])
+    }
 }

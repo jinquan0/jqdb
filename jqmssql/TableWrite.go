@@ -60,8 +60,8 @@ func BulkInsertTable(conn DBconn, tabname string, count int) {
 // update table1 set fld1=123456, fld2='e0f51c3b-fe0e-47a2-ac5b-739fcf6f2853' where id=101
 func RandomUpdateTable(conn DBconn, tabname string, id int) {
 	db := MssqlConn(conn)
-		num,uid:=random_data(); sql:=fmt.Sprintf("update "+tabname+" set fld1=%d, fld2=%s where id=%d", num, uid, id)
-		_, err = db.Exec(sql)
+		num,uid:=random_data(); sql:=fmt.Sprintf("update "+tabname+" set fld1=%d, fld2='%s' where id=%d", num, uid, id)
+		_, err := db.Exec(sql)
 		if err != nil {
 			log.Println("SQL Server/> Update failed", err)
 		} else {
