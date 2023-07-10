@@ -18,7 +18,7 @@ func MssqlConn(server string, port int,
         log.Fatal("SQL Server/> Cannot connect: ", err.Error())
         return nil
     }
-    defer db.Close()
+    //defer db.Close()
     err = db.Ping()
     if err != nil {
         log.Fatal("SQL Server/> Cannot connect: ", err.Error())
