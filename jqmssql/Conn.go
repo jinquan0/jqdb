@@ -24,7 +24,7 @@ type DBconn struct {
 func MssqlConn(conn DBconn) (*sql.DB) {
     dsn := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d;database=%s", 
                         conn.Server, conn.User, conn.Pass, conn.Port, conn.Database)
-    log.Printf(" dsn:%s\n", dsn)
+    //log.Printf(" dsn:%s\n", dsn)
     // database driver: Microsoft SQL Server
     db, err := sql.Open("mssql", dsn)
     if err != nil {
@@ -43,7 +43,7 @@ func MssqlConn(conn DBconn) (*sql.DB) {
 func MssqlConnWithMSA(server string, port int,
                 user string, database string ) (*sql.DB) {
     dsn := fmt.Sprintf("server=%s;user id=%s;port=%d;database=%s", server, user, port, database)
-    log.Printf(" dsn:%s\n", dsn)
+    //log.Printf(" dsn:%s\n", dsn)
     // database driver: Microsoft SQL Server
     db, err := sql.Open("mssql", dsn)
     if err != nil {
@@ -61,5 +61,5 @@ func MssqlConnWithMSA(server string, port int,
 
 func MssqlDisconn(MsDb *sql.DB){
     MsDb.Close()
-    log.Println("SQL Server/> database disconnected.")
+    //log.Println("SQL Server/> database disconnected.")
 }
