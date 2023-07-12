@@ -28,12 +28,12 @@ func init() {
 }
 
 func main() {
-	jq.CreateTable(DBC_PARA, 
+	jq.CreateTable(&DBC_PARA, 
 	`create table table1 (id int identity(101,1) primary key not null, 
      fld1 int not null,
  	 fld2 nvarchar(50) not null
  	)`)
 
- 	jq.BulkInsertTable(DBC_PARA, "table1", 100)
+ 	jq.BulkInsertTable(&DBC_PARA, "table1", 100)
 
 }

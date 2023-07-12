@@ -44,7 +44,7 @@ func init() {
 
 func main() {
     //db:=jq.MssqlConn(*server, *port, *user, *password)
-    db := jq.MssqlConn(DBC_PARA)
+    db := jq.MssqlConn(&DBC_PARA)
 
     //SELECT [Id],[F1],[F2],[F3],[F4],[F5] FROM [DB0].[dbo].[Table_1] WHERE Id=3 OR Id=5
     q:=&jq.ST_MsCommonQuery {

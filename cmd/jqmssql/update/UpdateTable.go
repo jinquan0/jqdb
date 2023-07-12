@@ -37,6 +37,6 @@ func main() {
 // 	jq.BulkInsertTable(DBC_PARA, "table1", 10)
 	
 	for i:=101; i < 120; i++ {
-		jq.RandomUpdateTable(DBC_PARA, "table1", i)
+		jq.RandomUpdateTable(&DBC_PARA, "table1", i)
 	}
 }

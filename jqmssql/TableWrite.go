@@ -17,7 +17,7 @@ import (
  	fld2 nvarchar(50) not null
  	)
  */
-func CreateTable(conn DBconn, sql string) {
+func CreateTable(conn *DBconn, sql string) {
     db := MssqlConn(conn)
 	_, err := db.Exec(sql)
 	//defer db.Exec("drop table " + tabname)
@@ -35,7 +35,7 @@ func random_data() (int64, string) {
 
 // sql example:
 //  insert into table1 (fld1, fld2) values(6410, '0def8a5b-ea01-4739-a06b-2ceb4dfccfbb')
-func BulkInsertTable(conn DBconn, tabname string, count int) {
+func BulkInsertTable(conn *DBconn, tabname string, count int) {
 	db := MssqlConn(conn)
 	for i := 0; i < count; i++ {
 		tx, err := db.Begin()
@@ -58,7 +58,7 @@ func BulkInsertTable(conn DBconn, tabname string, count int) {
 
 // sql example:
 // update table1 set fld1=123456, fld2='e0f51c3b-fe0e-47a2-ac5b-739fcf6f2853' where id=101
-func RandomUpdateTable(conn DBconn, tabname string, id int) {
+func RandomUpdateTable(conn *DBconn, tabname string, id int) {
 	db := MssqlConn(conn)
 		num,uid:=random_data(); sql:=fmt.Sprintf("update "+tabname+" set fld1=%d, fld2='%s' where id=%d", num, uid, id)
 		_, err := db.Exec(sql)
@@ -74,7 +74,7 @@ func RandomUpdateTable(conn DBconn, tabname string, id int) {
 // sql_tx1: "insert into tb1 (fld1, fld2) values (1,'aaa')", 
 // sql_tx2: "insert into tb1 (fld1, fld2) values (2,'bbb')", 
 // sql_post_tx: "select fld1,fld2 from tb1"
-func Transaction(conn DBconn, sql_tx1 string, sql_tx2 string, sql_post_tx string) {
+func Transaction(conn *DBconn, sql_tx1 string, sql_tx2 string, sql_post_tx string) {
     //db := MssqlConn(*server, *port, *user, *password, *database)
     db := MssqlConn(conn)
 

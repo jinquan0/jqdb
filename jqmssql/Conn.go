@@ -21,7 +21,7 @@ type DBconn struct {
 // https://github.com/denisenkom/go-mssqldb/blob/master/examples/tsql/tsql.go
 // func MssqlConn(server string, port int, user string, pass string,  database string ) (*sql.DB) {
 //    dsn := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d;database=%s", server, user, pass, port, database)
-func MssqlConn(conn DBconn) (*sql.DB) {
+func MssqlConn(conn *DBconn) (*sql.DB) {
     dsn := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d;database=%s", 
                         conn.Server, conn.User, conn.Pass, conn.Port, conn.Database)
     //log.Printf(" dsn:%s\n", dsn)
