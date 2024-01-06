@@ -23,7 +23,7 @@ func CreateTable(conn *DBconn, sql string) string {
 	_, err := db.Exec(sql)
 	//defer db.Exec("drop table " + tabname)
 	if err != nil {
-		retval = fmt.Sprintf("create table failed with error", err)
+		retval = fmt.Sprintf("create table failed, %v", err)
 	} else {
 		retval = fmt.Sprintf("create table successfully, %s", sql)
 	}
