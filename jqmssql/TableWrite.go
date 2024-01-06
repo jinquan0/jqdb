@@ -17,14 +17,18 @@ import (
  	fld2 nvarchar(50) not null
  	)
  */
-func CreateTable(conn *DBconn, sql string) {
+func CreateTable(conn *DBconn, sql string) string {
+    var retval string = ""
     db := MssqlConn(conn)
 	_, err := db.Exec(sql)
 	//defer db.Exec("drop table " + tabname)
 	if err != nil {
-		log.Println("SQL Server/> create table failed with error", err)
+		retval = fmt.Sprintf("create table failed with error", err)
+	} else {
+		retval = fmt.Sprintf("create table successfully, %s", sql)
 	}
 	MssqlDisconn(db)
+	return retval
 }
 
 func random_data() (int64, string) {
